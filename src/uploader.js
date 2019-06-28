@@ -64,10 +64,10 @@ export default class Uploader {
           'Authorization': `Bearer ${this.config.token}`,
           'Content-Type': 'application/json'
         },
-        data: JSON.stringify({
+        data: {
           skill: this.config.skill,
           key: name
-        })
+        }
       }).then(response => response.body);
   
       console.log(preupload);
@@ -90,7 +90,6 @@ export default class Uploader {
           url: `${res['host']}`,
           data: formData2
         }).then(response => response.body);
-
         upload.then((response) => {
           this.onUpload(response);
         }).catch((error) => {
