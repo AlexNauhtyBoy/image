@@ -24,6 +24,8 @@ export default class Uploader {
    * @param {function} onPreview - callback fired when preview is ready
    */
   uploadSelectedFile({ onPreview }) {
+
+    console.log('привет');
     const preparePreview = function (file) {
       const reader = new FileReader();
 
