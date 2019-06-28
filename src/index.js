@@ -96,6 +96,8 @@ export default class ImageTool {
   constructor({ data, config, api }) {
     this.api = api;
 
+    console.log(config);
+
     /**
      * Tool's initial config
      */
