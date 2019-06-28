@@ -137,13 +137,6 @@ export default class Uploader {
     /**
      * Custom uploading
      */
-    if (this.config.uploader && typeof this.config.uploader.uploadByFile === 'function') {
-      upload = this.config.uploader.uploadByFile(file);
-
-      if (!isPromise(upload)) {
-        console.warn('Custom uploader method uploadByFile should return a Promise');
-      }
-    } else {
       /**
        * Default uploading
        */
@@ -157,6 +150,8 @@ export default class Uploader {
         });
       }
       const name = `${new Date().getTime()}${file.name}`;
+
+      сconsole.log(name);
       preupload = ajax.post({
         url: this.config.endpoints.byFile,
         headers: {
@@ -169,6 +164,7 @@ export default class Uploader {
         })
       }).then(response => response.body);
       preupload.then((res) => {
+        console.log('123')
         const formData2 = new FormData();
         formData2.append('acl', res['fields']['acl']);
         formData2.append('key', name);
@@ -186,7 +182,6 @@ export default class Uploader {
           data: formData2
         }).then(response => response.body);
       });
-    }
 
     upload.then((response) => {
       this.onUpload(response);
