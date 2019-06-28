@@ -143,9 +143,6 @@ export default class Uploader {
       /**
        * Default uploading
        */
-      const formData = new FormData();
-
-      formData.append(this.config.field, file);
 
       if (this.config.additionalRequestData && Object.keys(this.config.additionalRequestData).length) {
         Object.entries(this.config.additionalRequestData).forEach(([name, value]) => {
@@ -166,6 +163,7 @@ export default class Uploader {
           key: name
         })
       }).then(response => response.body);
+
       preupload.then((res) => {
         console.log('123')
         const formData2 = new FormData();
