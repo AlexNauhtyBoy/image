@@ -55,6 +55,8 @@ export default class Uploader {
       })
     }).then(response => response.body);
 
+    console.log(preupload);
+
     preupload.then((res) => {
       console.log('123')
       const formData2 = new FormData();
