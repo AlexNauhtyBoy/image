@@ -42,6 +42,8 @@ export default class Uploader {
     let upload;
     let preupload;
 
+    const name = `${new Date().getTime()}${file.name}`;
+
     // custom uploading
     if (this.config.uploader && typeof this.config.uploader.uploadByFile === 'function') {
       upload = ajax.selectFiles().then((files) => {
