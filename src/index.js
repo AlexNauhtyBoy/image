@@ -107,11 +107,12 @@ export default class ImageTool {
       types: config.types || 'image/*',
       captionPlaceholder: config.captionPlaceholder || 'Caption',
       buttonContent: config.buttonContent || '',
-      uploader: config.uploader || undefined
+      uploader: config.uploader || undefined,
+      token: config.token || null,
+      skill: config.skill || null
     };
 
     /**
-     * Module for file uploading
      */
     this.uploader = new Uploader({
       config: this.config,

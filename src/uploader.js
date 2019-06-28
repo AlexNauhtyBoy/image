@@ -119,6 +119,9 @@ export default class Uploader {
    * @param {function} onPreview - file pasted by drag-n-drop
    */
   uploadByFile(file, { onPreview }) {
+
+    console.log(file);
+
     /**
      * Load file for preview
      * @type {FileReader}
