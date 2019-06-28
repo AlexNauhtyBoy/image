@@ -25,7 +25,7 @@ export default class Uploader {
    */
   uploadSelectedFile({ onPreview }) {
 
-    console.log('привет');
+    console.log('привет')
     const preparePreview = function (file) {
       const reader = new FileReader();
 
@@ -43,40 +43,55 @@ export default class Uploader {
     let preupload;
 
     // custom uploading
-    preupload = ajax.post({
-      url: this.config.endpoints.byFile,
-      headers: {
-        'Authorization': `Bearer ${this.config.token}`,
-        'Content-Type': 'application/json'
-      },
-      data: JSON.stringify({
-        skill: this.config.skill,
-        key: name
-      })
-    }).then(response => response.body);
+    if (this.config.uploader && typeof this.config.uploader.uploadByFile === 'function') {
+      upload = ajax.selectFiles().then((files) => {
+        preparePreview(files[0]);
 
-    console.log(preupload);
+        const customUpload = this.config.uploader.uploadByFile(files[0]);
 
-    preupload.then((res) => {
-      console.log('123')
-      const formData2 = new FormData();
-      formData2.append('acl', res['fields']['acl']);
-      formData2.append('key', name);
-      formData2.append('bucket', res['fields']['bucket']);
-      formData2.append('policy', res['fields']['policy']);
-      formData2.append('x-amz-algorithm', res['fields']['x-amz-algorithm']);
-      formData2.append('x-amz-credential', res['fields']['x-amz-credential']);
-      formData2.append('x-amz-date', res['fields']['x-amz-date']);
-      formData2.append('x-amz-meta-tag', res['fields']['x-amz-meta-tag']);
-      formData2.append('x-amz-meta-uuid', res['fields']['x-amz-meta-uuid']);
-      formData2.append('x-amz-signature', res['fields']['x-amz-signature']);
-      formData2.append('file', file);
-      upload = ajax.post({
-        url: `${res['host']}`,
-        data: formData2
+        if (!isPromise(customUpload)) {
+          console.warn('Custom uploader method uploadByFile should return a Promise');
+        }
+
+        return customUpload;
+      });
+
+    // default uploading
+    } else {
+      preupload = ajax.post({
+        url: this.config.endpoints.byFile,
+        headers: {
+          'Authorization': `Bearer ${this.config.token}`,
+          'Content-Type': 'application/json'
+        },
+        data: JSON.stringify({
+          skill: this.config.skill,
+          key: name
+        })
       }).then(response => response.body);
-    });
-
+  
+      console.log(preupload);
+  
+      preupload.then((res) => {
+        console.log('123')
+        const formData2 = new FormData();
+        formData2.append('acl', res['fields']['acl']);
+        formData2.append('key', name);
+        formData2.append('bucket', res['fields']['bucket']);
+        formData2.append('policy', res['fields']['policy']);
+        formData2.append('x-amz-algorithm', res['fields']['x-amz-algorithm']);
+        formData2.append('x-amz-credential', res['fields']['x-amz-credential']);
+        formData2.append('x-amz-date', res['fields']['x-amz-date']);
+        formData2.append('x-amz-meta-tag', res['fields']['x-amz-meta-tag']);
+        formData2.append('x-amz-meta-uuid', res['fields']['x-amz-meta-uuid']);
+        formData2.append('x-amz-signature', res['fields']['x-amz-signature']);
+        formData2.append('file', file);
+        upload = ajax.post({
+          url: `${res['host']}`,
+          data: formData2
+        }).then(response => response.body);
+      });
+    }
 
     upload.then((response) => {
       this.onUpload(response);
