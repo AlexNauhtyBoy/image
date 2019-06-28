@@ -84,7 +84,7 @@ export default class ImageTool {
   static get toolbox() {
     return {
       icon: ToolboxIcon,
-      title: 'Image'
+      title: 'ImageTool'
     };
   }
 
