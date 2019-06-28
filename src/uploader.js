@@ -90,14 +90,14 @@ export default class Uploader {
           url: `${res['host']}`,
           data: formData2
         }).then(response => response.body);
+
+        upload.then((response) => {
+          this.onUpload(response);
+        }).catch((error) => {
+          this.onError(error);
+        });
       });
     }
-
-    upload.then((response) => {
-      this.onUpload(response);
-    }).catch((error) => {
-      this.onError(error);
-    });
   }
 
   /**
