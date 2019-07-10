@@ -17,6 +17,7 @@ export default class Ui {
         this.config = config;
         this.onSelectFile = onSelectFile;
         this.nodes = {
+            container: make('div', ['uploader_container']),
             wrapper: make('div', [this.CSS.baseClass, this.CSS.wrapper]),
             imageContainer: make('div', [this.CSS.imageContainer]),
             fileButton: this.createFileButton(),
@@ -37,8 +38,11 @@ export default class Ui {
          *    <select-file-button />
          *  </wrapper>
          */
+        this.nodes.container.appendChild(this.nodes.wrapper)
+
         this.nodes.caption.dataset.placeholder = this.config.captionPlaceholder;
         this.nodes.imageContainer.appendChild(this.nodes.imagePreloader);
+
         this.nodes.wrapper.appendChild(this.nodes.imageContainer);
         // this.nodes.wrapper.appendChild(this.nodes.caption);
         this.nodes.wrapper.appendChild(this.nodes.fileButton);
@@ -92,7 +96,7 @@ export default class Ui {
             this.toggleStatus(Ui.status.UPLOADING);
         }
 
-        return this.nodes.wrapper;
+        return this.nodes.container;
     }
 
     /**
