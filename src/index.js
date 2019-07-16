@@ -96,8 +96,6 @@ export default class ImageTool {
   constructor({ data, config, api }) {
     this.api = api;
 
-    console.log(config);
-
     /**
      * Tool's initial config
      */
@@ -116,6 +114,7 @@ export default class ImageTool {
 
     /**
      */
+
     this.uploader = new Uploader({
       config: this.config,
       onUpload: (response) => this.onUpload(response),
@@ -205,13 +204,13 @@ export default class ImageTool {
       /**
        * Paste HTML into Editor
        */
-      tags: [ 'img' ],
+      tags: [ 'IMG' ],
 
       /**
        * Paste URL of image into the Editor
        */
       patterns: {
-        image: /https?:\/\/\S+\.(gif|jpe?g|tiff|png)$/i
+        image: /https?:\/\/\S+\.(gif|jpe?g|tiff|png|jpg)$/i
       },
 
       /**
@@ -230,26 +229,31 @@ export default class ImageTool {
    * @see {@link https://github.com/codex-team/editor.js/blob/master/docs/tools.md#paste-handling}
    */
   async onPaste(event) {
+
+    console.log(event.type);
     switch (event.type) {
       case 'tag':
         const image = event.detail.data;
-
+        console.log(image);
         /** Images from PDF */
-        if (/^blob:/.test(image.src)) {
-          const response = await fetch(image.src);
-          const file = await response.blob();
+        // if (/^blob:/.test(image.src)) {
+        //   console.log('привет');
+        //   const response = await fetch(image.src);
+        //   const file = await response.blob();
+        //
+        //   this.uploadFile(file);
+        //   break;
+        // }
 
-          this.uploadFile(file);
-          break;
-        }
+        const response = await fetch(image.src);
+        let srcFile = await response.blob();
 
-        this.uploadUrl(image.src);
+        this.uploadFile(srcFile);
         break;
 
       case 'pattern':
         const url = event.detail.data;
-
-        this.uploadUrl(url);
+        this.onUpload({success: true, file: url});
         break;
 
       case 'file':
@@ -312,7 +316,7 @@ export default class ImageTool {
    * File uploading callback
    * @private
    *
-   * @param {UploadResponseFormat} response
+   * @param {{file: *, success: boolean}} response
    */
   onUpload(response) {
     if (response.success && response.file) {

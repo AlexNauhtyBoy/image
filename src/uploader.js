@@ -46,7 +46,6 @@ export default class Uploader {
     if (this.config.uploader && typeof this.config.uploader.uploadByFile === 'function') {
       upload = ajax.selectFiles().then((files) => {
         preparePreview(files[0]);
-
         const customUpload = this.config.uploader.uploadByFile(files[0]);
 
         if (!isPromise(customUpload)) {
@@ -83,8 +82,8 @@ export default class Uploader {
    * @param {string} url - image source url
    */
   uploadByUrl(url) {
+    console.log(url);
     let upload;
-
     /**
      * Custom uploading
      */
