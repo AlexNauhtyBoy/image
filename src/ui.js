@@ -120,7 +120,6 @@ export default class Ui {
      * @param {string} src - preview source
      */
     showPreloader(src) {
-        console.log(src);
         this.nodes.imagePreloader.innerHTML = `
         <div class="upload-tool__link upload-tool__link--loading">
         <div class="progressFill load"></div>

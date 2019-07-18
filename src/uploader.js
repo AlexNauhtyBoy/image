@@ -82,7 +82,6 @@ export default class Uploader {
    * @param {string} url - image source url
    */
   uploadByUrl(url) {
-    console.log(url);
     let upload;
     /**
      * Custom uploading

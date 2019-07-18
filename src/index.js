@@ -230,11 +230,9 @@ export default class ImageTool {
    */
   async onPaste(event) {
 
-    console.log(event.type);
     switch (event.type) {
       case 'tag':
         const image = event.detail.data;
-        console.log(image);
         /** Images from PDF */
         // if (/^blob:/.test(image.src)) {
         //   console.log('привет');
