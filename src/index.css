@@ -3,6 +3,11 @@
   --front-color: #388AE5;
   --border-color: #E8E8EB;
 
+  &__input {
+  opacity: 0;
+  pointer-events: none;
+   }
+
   &__image {
     border-radius: 3px;
     overflow: hidden;

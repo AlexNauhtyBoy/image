@@ -22,6 +22,7 @@ export default class Ui {
             imageContainer: make('div', [this.CSS.imageContainer]),
             fileButton: this.createFileButton(),
             imageEl: undefined,
+            input: make('input', ['image-tool__input']),
             imagePreloader: make('div', this.CSS.imagePreloader),
             caption: make('div', [this.CSS.input, this.CSS.caption], {
                 contentEditable: true
@@ -38,7 +39,7 @@ export default class Ui {
          *    <select-file-button />
          *  </wrapper>
          */
-        this.nodes.container.appendChild(this.nodes.wrapper)
+        this.nodes.container.appendChild(this.nodes.wrapper);
 
         this.nodes.caption.dataset.placeholder = this.config.captionPlaceholder;
         this.nodes.imageContainer.appendChild(this.nodes.imagePreloader);
@@ -46,6 +47,7 @@ export default class Ui {
         this.nodes.wrapper.appendChild(this.nodes.imageContainer);
         // this.nodes.wrapper.appendChild(this.nodes.caption);
         this.nodes.wrapper.appendChild(this.nodes.fileButton);
+        this.nodes.wrapper.appendChild(this.nodes.input);
     }
 
     /**
@@ -56,7 +58,7 @@ export default class Ui {
         return {
             baseClass: this.api.styles.block,
             loading: this.api.styles.loader,
-            input: this.api.styles.input,
+            input: 'image-tool__input',
             button: this.api.styles.button,
 
             /**
